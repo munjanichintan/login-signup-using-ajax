@@ -1,0 +1,36 @@
+<!DOCTYPE html>  
+<html>  
+<head runat="server">  
+    <title>Login</title>  
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>  
+     <script>  
+         $(document).ready(function () {  
+             $('#submit').click(function() {
+              var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+              var nid = $("#id").val();
+              var url = "{% url 'delete' 0 %}".replace(0, nid);
+
+    $.ajax({
+             url : url,
+             dataType: "json",
+             contentType: "application/json; charset=utf-8",
+             success : function (data) {
+                      if(data.deleted){
+                        $("#SignUp #user-" + id).remove();
+                      }
+                    },
+                    error: function(errMsg){
+                      alert("This is error part")
+                    }
+                 });
+             });  
+         });  
+    </script>  
+</head>  
+<body>  
+    <form>
+        Enter user id here: <input type="number" id="id">
+        <input type="button" id="submit" value="Click here for delete">
+    </form>
+</body>    
+</html>
