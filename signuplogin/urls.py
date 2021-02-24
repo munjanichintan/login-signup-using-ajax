@@ -30,6 +30,8 @@ urlpatterns = [
     path('retrievehtml/', views.retrieve, name='retrievehtml'),
     path('updatehtml/', views.update, name='updatehtml'),
     path('deletehtml/', views.delete, name='deletehtml'),
+    path('success/', views.success, name='success'),
+    path('forgothtml/', views.forgot, name='forgothtml'),
 
     path('home/', views.home),
 

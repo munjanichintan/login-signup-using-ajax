@@ -1,24 +1,17 @@
 <!DOCTYPE html>  
 <html>  
 <head runat="server">  
-    <title>Signup Page</title>  
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> 
-    <form>  
-        {%csrf_token%}
-        <label>firstname:- 
-            <input type="text" id="firstname" />
-        </label>
-        <br>  
-        <label>lastname:- 
-            <input type="text" id="lastname" />
+    <title>Forgot Password Page</title>  
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <form>
+        {% csrf_token %}
+        <label>Enter id:-
+            <input type="number" id="id">
         </label>
         <br>
-        <label>email:- 
-            <input type="text" id="email" />
-        </label>
-        <br>
-        <label>password:-
-            <input type="text" id="password" />
+        <label>password :
+            <input name="password" id="password" type="password" />
         </label>
         <br>
         <label>confirm password:
@@ -26,29 +19,30 @@
         <span id='message'></span>
         </label>
         <br>
-        <input type="button" id="Save" value="Save Data" />  
-    </form> 
-     <script>
+        <input type="button" id="Save" value="Submit" />  
+    </form>
+    
+    <script>  
         $('#password, #confirm_password').on('keyup', function () {
             if ($('#password').val() == $('#confirm_password').val()) {
                 $('#message').html('Matching').css('color', 'green');
             } else 
                 $('#message').html('Not Matching').css('color', 'red');
         });
-         $(document).ready(function () {  
+         $(document).ready(function () { 
+            
              $("#Save").click(function () {  
              	 var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
-                 var url = "{% url 'signup' %}"
+                 var id = $("#id").val();
+                 var url = "{% url 'update' 0 %}".replace(0, id);
+                 alert("Your selected id is "+id)
                  var person = new Object();
-                 person.firstname = $('#firstname').val();
-                 person.lastname = $('#lastname').val();  
-                 person.email = $('#email').val();
                  person.password = $('#password').val();
                  var ndata = JSON.stringify(person);
                  
                  $.ajax({  
                      url: url,  
-                     type: "POST",  
+                     type: "PATCH",  
                      dataType: "json",  
                      contentType: "application/json; charset=utf-8",
                      data: ndata, 
@@ -63,5 +57,5 @@
              });  
          });  
     </script>  
-</head>    
+</head>   
 </html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .serializers import SignUpSerializer, LoginSerializer
 from django.contrib.auth import login, authenticate
 from .models import SignUp
@@ -33,6 +33,12 @@ def update(request):
 def delete(request):
 	return render(request, 'delete.html')
 
+def success(request):
+	return render(request, 'success.html')
+
+def forgot(request):
+	return render(request, 'forgot.html')
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UserView(CreateAPIView):
@@ -48,8 +54,7 @@ class LoginView(GenericAPIView):
 	def post(self, request, *args, **kwargs):
 		serializer_class = LoginSerializer(data=request.data)
 		if serializer_class.is_valid(raise_exception=True):
-			return render(request, 'success.html')
-			# return Response(serializer_class.data, status=status.HTTP_200_OK)
+			return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
